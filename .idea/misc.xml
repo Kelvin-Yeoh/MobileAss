@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/testing/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
-        <entry key="..\:/Users/danie/Desktop/MobileAss/app/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/danie/Desktop/MobileAss/app/src/main/res/layout/login_screen.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/danie/Desktop/MobileAss/app/src/main/res/layout/register_screen.xml" value="0.22" />
+        <entry key="..\:/Users/LENOVO/Desktop/testing/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/LENOVO/Desktop/testing/app/src/main/res/layout/donate_screen.xml" value="0.264" />
+        <entry key="..\:/Users/LENOVO/Desktop/testing/app/src/main/res/layout/eventcreator_screen.xml" value="0.253125" />
+        <entry key="..\:/Users/LENOVO/Desktop/testing/app/src/main/res/layout/login_screen.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
