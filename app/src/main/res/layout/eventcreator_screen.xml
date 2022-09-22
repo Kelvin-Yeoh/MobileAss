@@ -94,6 +94,7 @@
             android:layout_marginTop="5dp"
             android:background="@null"
             android:scaleType="centerInside"
+            android:onClick="login"
             app:srcCompat="@drawable/profileicon" />
     </LinearLayout>
 
