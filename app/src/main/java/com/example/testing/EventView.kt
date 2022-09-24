@@ -16,7 +16,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class MainActivity : AppCompatActivity() {
+class EventView : AppCompatActivity() {
 
     private val URLstring = "http://10.0.2.2/getevent.php"
     private lateinit var rvAdapter : RvAdapter
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             },
             Response.ErrorListener { error ->
                 Toast.makeText(
-                    this@MainActivity,
+                    this@EventView,
                     error.toString().trim { it <= ' ' },
                     Toast.LENGTH_SHORT
                 ).show()

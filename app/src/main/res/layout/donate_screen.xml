@@ -7,6 +7,9 @@
 
     <!-- Header aligned to top -->
 
+    <!-- Footer aligned to bottom -->
+
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -14,7 +17,9 @@
         android:layout_alignParentTop="true"
         android:background="#FC0"
         android:gravity="center"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -39,8 +44,7 @@
 
     </RelativeLayout>
 
-    <!-- Footer aligned to bottom -->
-
+    <!-- Content below header and above footer -->
 
     <LinearLayout
         android:id="@+id/footer"
@@ -49,8 +53,8 @@
         android:layout_alignParentBottom="true"
         android:background="#FC0"
 
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="671dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/imageButton3"
@@ -82,7 +86,16 @@
             app:srcCompat="@drawable/profileicon" />
     </LinearLayout>
 
-    <!-- Content below header and above footer -->
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
