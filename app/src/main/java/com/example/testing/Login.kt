@@ -19,6 +19,7 @@ class Login : AppCompatActivity() {
     private var password: String? = null
     lateinit var etEmail: EditText
     lateinit var etPassword: EditText
+
     private val URL :String = "http://10.0.2.2/login/login.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class Login : AppCompatActivity() {
                 Response.Listener { response ->
                     Log.d("res", response)
                     if (response == "success") {
-                        val intent = Intent(this@Login, Success::class.java)
+                        val intent = Intent(this@Login, ProfileActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else if (response == "failure") {

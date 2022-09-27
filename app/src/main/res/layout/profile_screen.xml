@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <!-- Header aligned to top -->
 
     <RelativeLayout
@@ -79,8 +80,6 @@
             app:srcCompat="@drawable/profileicon" />
     </LinearLayout>
 
-
-    <!-- Content -->
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -107,13 +106,24 @@
                 android:layout_marginTop="16dp"
                 android:text="Email:" />
 
-            <EditText
-                android:id="@+id/txtEmail"
+            <TextView
+                android:id="@+id/lblEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
+                android:text="Username:" />
+
+            <TextView
+                android:id="@+id/lblUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -122,14 +132,11 @@
                 android:layout_marginStart="20dp"
                 android:text="Password:" />
 
-            <EditText
-                android:id="@+id/txtPassword"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/lblPassword"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:inputType="textPassword" />
+                android:layout_marginStart="20dp" />
 
             <Button
                 android:id="@+id/btnLogin"
