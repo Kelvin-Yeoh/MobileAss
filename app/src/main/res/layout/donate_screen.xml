@@ -7,45 +7,8 @@
 
     <!-- Header aligned to top -->
 
+
     <!-- Footer aligned to bottom -->
-
-
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:background="#FC0"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            app:srcCompat="@drawable/mobilelogo"
-            tools:layout_editor_absoluteX="38dp"
-            tools:layout_editor_absoluteY="165dp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="150dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="-6dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/imageView2"
-            android:text="@string/HeaderLogoText"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            tools:layout_editor_absoluteY="213dp" />
-
-
-    </RelativeLayout>
-
-    <!-- Content below header and above footer -->
-
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
@@ -86,16 +49,18 @@
             app:srcCompat="@drawable/profileicon" />
     </LinearLayout>
 
+    <!-- Content below header and above footer -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.065" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
