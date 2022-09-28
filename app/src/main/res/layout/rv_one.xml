@@ -7,20 +7,21 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="174dp"
         android:layout_margin="5dp"
+        android:backgroundTint="@color/cardview_shadow_start_color"
         app:cardCornerRadius="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="399dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="149dp"
+                android:layout_height="156dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY" />
@@ -33,9 +34,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="225dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="ddd"
@@ -44,12 +45,22 @@
 
                 <TextView
                     android:id="@+id/textViewMeal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="225dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
+                    android:layout_marginTop="20dp"
                     android:text="ddd"
                     android:textColor="#000"
                     android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/eventProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="225dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleY="2"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewMeal" />
             </LinearLayout>
         </LinearLayout>
 

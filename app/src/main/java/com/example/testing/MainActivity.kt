@@ -8,8 +8,8 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() ,onClickListener{
     private lateinit var rvAdapter : RvAdapter
     private var recyclerView: RecyclerView? = null
     val data = ArrayList<ItemsViewModel>()
+    private var testing: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +48,6 @@ class MainActivity : AppCompatActivity() ,onClickListener{
     }
 
     private fun fetchingJSON() {
-
-
         val recyclerview = findViewById<RecyclerView>(R.id.recycler)
         val stringRequest: JsonArrayRequest = object : JsonArrayRequest(
             Request.Method.GET, URLstring,
@@ -61,8 +60,11 @@ class MainActivity : AppCompatActivity() ,onClickListener{
                     data.add(
                         ItemsViewModel(
                             dataobj.getString("image"),
+                            dataobj.getString("event_title"),
+                            dataobj.getString("meal_quantity"),
+                            dataobj.getInt("id"),
                             dataobj.getString("event_description"),
-                            dataobj.getString("meal_quantity")
+                            dataobj.getInt("current_meal_quantity")
                         )
                     )
                 }
@@ -81,6 +83,17 @@ class MainActivity : AppCompatActivity() ,onClickListener{
         requestQueue.add(stringRequest)
     }
 
+    override fun onItemClick(position: Int) {
+        Toast.makeText(this, "Event " +position+ " Clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, EventDetail::class.java)
+        intent.putExtra("image", data[position].image)
+        intent.putExtra("textTitle", data[position].textViewTitle)
+        intent.putExtra("textMeal", data[position].textViewMeal)
+        intent.putExtra("id", data[position].id)
+        intent.putExtra("eventDescription", data[position].eventDescription)
+        startActivity(intent)
+    }
+
     fun register(view: View?) {
         val intent = Intent(this, Register::class.java)
         startActivity(intent)
@@ -91,13 +104,6 @@ class MainActivity : AppCompatActivity() ,onClickListener{
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
         finish()
-    }
-
-    override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Event"+position+"Clicked", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, EventDetail::class.java)
-        intent.putExtra("textTitle", data[position].textViewEvent)
-        startActivity(intent)
     }
 }
 

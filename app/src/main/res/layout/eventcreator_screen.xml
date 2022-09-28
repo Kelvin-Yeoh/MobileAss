@@ -7,21 +7,21 @@
 
     <!-- Header aligned to top -->
 
+    <!-- Footer aligned to bottom -->
+
+    <!-- Content below header and above footer -->
+
     <Button
         android:id="@+id/browse"
         android:layout_width="187dp"
         android:layout_height="47dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="168dp"
         android:padding="10dp"
         android:text="Browse Image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img" />
-
-    <!-- Footer aligned to bottom -->
-
-    <!-- Content below header and above footer -->
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <RelativeLayout
         android:id="@+id/header"
@@ -129,15 +129,18 @@
         android:layout_marginEnd="116dp"
         android:text="Request For a Help !"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="117dp"
-        android:layout_height="111dp"
-        android:layout_marginTop="152dp"
+        android:layout_width="146dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="124dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:srcCompat="@drawable/ic_launcher_foreground"
@@ -145,33 +148,34 @@
 
     <EditText
         android:id="@+id/editTextEventDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Description for the event"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/browse"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMeals"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextMeals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Quantity of meals"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEventDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEventTitle"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/upload"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:background="@color/colorPrimary"
         android:padding="10dp"
         android:text="Submit"
@@ -179,8 +183,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMeals"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="586dp" />
+
+    <EditText
+        android:id="@+id/editTextEventTitle"
+        android:layout_width="347dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="Event Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

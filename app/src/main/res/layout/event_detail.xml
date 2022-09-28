@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="906dp"
-        android:layout_height="329dp"
+        android:layout_width="379dp"
+        android:layout_height="297dp"
         android:layout_marginTop="16dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,27 +17,66 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewEvent"
-        android:layout_width="896dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/textViewMeal"
+        android:layout_width="153dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="12dp"
         android:layout_weight="1"
         android:text="ddd"
         android:textColor="#000"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/image"
-        tools:layout_editor_absoluteX="21dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <TextView
-        android:id="@+id/textViewMeal"
-        android:layout_width="266dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="36dp"
+        android:id="@+id/textViewTitle"
+        android:layout_width="349dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:text="ddd"
         android:textColor="#000"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEvent"
-        tools:layout_editor_absoluteX="21dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="379dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
+        android:scaleY="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMeal" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="366dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <Button
+        android:id="@+id/btnDonate"
+        android:layout_width="261dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
+        app:layout_constraintVertical_bias="0.186" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
