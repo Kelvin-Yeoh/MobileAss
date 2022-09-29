@@ -1,8 +1,5 @@
 package com.example.testing
 
-import android.net.Uri
-
-
-data class ItemsViewModel(val image: String, val textViewEvent: String, val textViewMeal: String){
+data class ItemsViewModel(val image: String, val textViewTitle: String, val textViewMeal: String, val id: Int, val eventDescription: String, val currentMeal: Int){
 
 }

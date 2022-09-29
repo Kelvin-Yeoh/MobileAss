@@ -9,8 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() ,onClickListener{
     private lateinit var rvAdapter : RvAdapter
     private var recyclerView: RecyclerView? = null
     val data = ArrayList<ItemsViewModel>()
+    private var testing: TextView? = null
 
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -70,40 +71,52 @@ class MainActivity : AppCompatActivity() ,onClickListener{
 
     }
 
-//    private fun fetchingJSON() {
-//
-//
-//        val recyclerview = findViewById<RecyclerView>(R.id.recycler)
-//        val stringRequest: JsonArrayRequest = object : JsonArrayRequest(
-//            Request.Method.GET, URLstring,
-//            null, { response ->
-//
-//                for (i in 0 until response.length()) {
-//                    val dataobj = response.getJSONObject(i)
-//
-//                    //adding the product to product list
-//                    data.add(
-//                        ItemsViewModel(
-//                            dataobj.getString("image"),
-//                            dataobj.getString("event_description"),
-//                            dataobj.getString("meal_quantity")
-//                        )
-//                    )
-//                }
-//                val adapter = RvAdapter(data, this)
-//                recyclerview.adapter = adapter
-//            },
-//            Response.ErrorListener { error ->
-//                Toast.makeText(
-//                    this@MainActivity,
-//                    error.toString().trim { it <= ' ' },
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }) {
-//        }
-//        val requestQueue = Volley.newRequestQueue(applicationContext)
-//        requestQueue.add(stringRequest)
-//    }
+    private fun fetchingJSON() {
+        val recyclerview = findViewById<RecyclerView>(R.id.recycler)
+        val stringRequest: JsonArrayRequest = object : JsonArrayRequest(
+            Request.Method.GET, URLstring,
+            null, { response ->
+
+                for (i in 0 until response.length()) {
+                    val dataobj = response.getJSONObject(i)
+
+                    //adding the product to product list
+                    data.add(
+                        ItemsViewModel(
+                            dataobj.getString("image"),
+                            dataobj.getString("event_title"),
+                            dataobj.getString("meal_quantity"),
+                            dataobj.getInt("id"),
+                            dataobj.getString("event_description"),
+                            dataobj.getInt("current_meal_quantity")
+                        )
+                    )
+                }
+                val adapter = RvAdapter(data, this)
+                recyclerview.adapter = adapter
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(
+                    this@MainActivity,
+                    error.toString().trim { it <= ' ' },
+                    Toast.LENGTH_SHORT
+                ).show()
+            }) {
+        }
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(stringRequest)
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(this, "Event " +position+ " Clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, EventDetail::class.java)
+        intent.putExtra("image", data[position].image)
+        intent.putExtra("textTitle", data[position].textViewTitle)
+        intent.putExtra("textMeal", data[position].textViewMeal)
+        intent.putExtra("id", data[position].id)
+        intent.putExtra("eventDescription", data[position].eventDescription)
+        startActivity(intent)
+    }
 
     fun register(view: View?) {
         val intent = Intent(this, Register::class.java)
@@ -115,20 +128,6 @@ class MainActivity : AppCompatActivity() ,onClickListener{
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
         finish()
-    }
-
-    override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Event"+position+"Clicked", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, EventDetail::class.java)
-        intent.putExtra("textTitle", data[position].textViewEvent)
-        startActivity(intent)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
 

@@ -22,17 +22,20 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.android.synthetic.main.eventcreator_screen.*
 import java.io.ByteArrayOutputStream
 
 
 class EventCreator : AppCompatActivity() {
     var editTextEventDescription: EditText? = null
     var editTextMeals: EditText? = null
+    var editTextEventTitle: EditText? = null
     var browse: Button? = null
     var upload: Button? = null
     var img: ImageView? = null
     var bitmap: Bitmap? = null
     var encodeImageString: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.eventcreator_screen)
@@ -85,8 +88,12 @@ class EventCreator : AppCompatActivity() {
     private fun uploaddatatodb() {
         editTextEventDescription = findViewById<View>(R.id.editTextEventDescription) as EditText
         editTextMeals = findViewById<View>(R.id.editTextMeals) as EditText
+        editTextEventTitle = findViewById<View>(R.id.editTextEventTitle) as EditText
+
+        val title = editTextEventTitle!!.text.toString().trim { it <= ' ' }
         val name = editTextEventDescription!!.text.toString().trim { it <= ' ' }
-        val dsg = editTextMeals!!.text.toString().trim { it <= ' ' }
+        val meal = editTextMeals!!.text.toString().trim { it <= ' ' }
+
         val request: StringRequest = object : StringRequest(
             Method.POST, url,
             Response.Listener { response ->
@@ -106,7 +113,8 @@ class EventCreator : AppCompatActivity() {
             override fun getParams(): Map<String, String>? {
                 val map: MutableMap<String, String> = HashMap()
                 map["editTextEventDescription"] = name
-                map["editTextMeals"] = dsg
+                map["editTextMeals"] = meal
+                map["editTextEventTitle"] = title
                 map["upload"] = encodeImageString!!
                 return map
             }
@@ -118,7 +126,6 @@ class EventCreator : AppCompatActivity() {
     companion object {
         private const val url = "http://10.0.2.2/eventcreate.php"
     }
-
 
     fun register(view: View?) {
         val intent = Intent(this, Register::class.java)
