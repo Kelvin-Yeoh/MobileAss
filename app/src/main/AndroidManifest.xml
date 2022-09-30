@@ -30,6 +30,9 @@
             android:name=".EventDetail"
             android:exported="false" />
         <activity
+            android:name=".EventView"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -40,6 +43,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

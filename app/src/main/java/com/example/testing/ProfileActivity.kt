@@ -1,6 +1,8 @@
 package com.example.testing
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,46 +18,80 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
 
 class ProfileActivity : AppCompatActivity() {
 
-    lateinit var etEmail: TextView
-    lateinit var etPassword: TextView
-    lateinit var etUsername: TextView
 
-    private val URL :String = "http://10.0.2.2/login/login.php"
-    lateinit var toggle: ActionBarDrawerToggle
+
+    private val URL :String = "http://10.0.2.2/login/profile.php"
+
+
+    private var username: TextView? = null
+    private var useremail: TextView? = null
+    private var password: TextView? = null
+    var PREFS_KEY = "prefs"
+    var EMAIL_KEY = "email"
+    var NAME_KEY = "name"
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_screen)
-        etEmail = findViewById(R.id.lblEmail)
-        etUsername = findViewById(R.id.lblUsername)
-        etPassword = findViewById(R.id.lblPassword)
 
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        nav_view.setNavigationItemSelectedListener {
+        sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
-            when(it.itemId){
-                R.id.nav_profile ->startActivity(Intent(this, ProfileActivity::class.java))
+        display()
+
+
+
+    }
+
+    private fun display() {
+
+        username = findViewById(R.id.lblUsername)
+        useremail = findViewById(R.id.lblEmail)
+        password = findViewById(R.id.lblPassword)
+
+
+
+        val email = sharedPreferences.getString(EMAIL_KEY, null)!!
+        val StringRequest: StringRequest = object : StringRequest(
+            Request.Method.POST, URL,
+            Response.Listener{ response ->
+                val userDetail = JSONArray(response)
+                for (i in 0 until userDetail.length()) {
+                    val dataobj = userDetail.getJSONObject(i)
+
+                    //adding the product to product list
+
+                    username!!.text = dataobj.get("name").toString();
+                    useremail!!.text = dataobj.get("email").toString();
+                    password!!.text = dataobj.getString("password");
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(
+                    this@ProfileActivity,
+                    error.toString().trim { it <= ' ' },
+                    Toast.LENGTH_SHORT
+                ).show()
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String>? {
+                val data: MutableMap<String, String> = HashMap()
+                data["email"] = email!!
+                return data
             }
-            true
         }
-
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(StringRequest)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+
 
 
 }

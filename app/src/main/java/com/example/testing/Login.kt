@@ -1,6 +1,8 @@
 package com.example.testing
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,9 +27,12 @@ class Login : AppCompatActivity() {
 
     private val URL :String = "http://10.0.2.2/login/login.php"
 
+    lateinit var sharedPreferences: SharedPreferences
+    var PREFS_KEY = "prefs"
+    var EMAIL_KEY = "email"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
 
 
 
@@ -37,6 +42,8 @@ class Login : AppCompatActivity() {
         etPassword = findViewById(R.id.txtPassword)
 
 
+        sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+        email = sharedPreferences.getString(EMAIL_KEY, "").toString()
 
 
     }
@@ -50,6 +57,9 @@ class Login : AppCompatActivity() {
                 Response.Listener { response ->
                     Log.d("res", response)
                     if (response == "success") {
+                        val editor: SharedPreferences.Editor=sharedPreferences.edit()
+                        editor.putString(EMAIL_KEY, etEmail.text.toString())
+                        editor.apply()
                         val intent = Intent(this@Login, ProfileActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -60,6 +70,7 @@ class Login : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                 },
                 Response.ErrorListener { error ->
                     Toast.makeText(
