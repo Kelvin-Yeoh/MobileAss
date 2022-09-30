@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         nav_view.setNavigationItemSelectedListener {
 
             when(it.itemId){
-                R.id.nav_profile -> replaceFragment(profile_fragment(), it.title.toString())
+                R.id.nav_profile -> replaceFragment(LoginActivity(), it.title.toString())
                 R.id.nav_home -> replaceFragment(EventViewActivity(), it.title.toString())
             }
             true

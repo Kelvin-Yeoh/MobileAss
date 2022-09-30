@@ -1,7 +1,5 @@
 package com.example.testing
 
-import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.testing.databinding.FragmentEventDetailActivityBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.rv_one.view.*
 
 
 class EventDetailActivity : Fragment() {
@@ -56,8 +53,18 @@ class EventDetailActivity : Fragment() {
         progressBar!!.progress = args?.getInt("currentMeal")!!
 
         btnDonate!!.setOnClickListener {
-            val intent = Intent(binding.root.context, DonationActivity::class.java)
-            startActivity(intent)
+            val bundle = Bundle()
+            bundle.putString("image", args?.getString("image"))
+            bundle.putString("textTitle", args?.getString("textTitle"))
+            bundle.putString("textMeal", args?.getString("textMeal"))
+            bundle.putInt("id", args?.getInt("id")!!)
+            bundle.putString("eventDescription", args?.getString("eventDescription"))
+            bundle.putInt("currentMeal", args?.getInt("currentMeal")!!)
+
+
+            val fragment = DonationActivity()
+            fragment.arguments = bundle
+            fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
         }
         return binding.root
     }
