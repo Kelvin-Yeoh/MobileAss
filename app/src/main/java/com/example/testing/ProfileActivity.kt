@@ -47,8 +47,7 @@ class ProfileActivity : AppCompatActivity() {
 
         display()
 
-
-
+        
     }
 
     private fun display() {
