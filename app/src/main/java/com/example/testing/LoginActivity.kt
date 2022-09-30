@@ -71,7 +71,7 @@ class LoginActivity : Fragment() {
                         editor.apply()
 //                        val intent = Intent(binding.root.context, ProfileActivity::class.java)
 //                        startActivity(intent)
-                        val fragment = profile_fragment()
+                        val fragment = ProfileActivity()
                         fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
                     } else if (response == "failure") {
                         Toast.makeText(
