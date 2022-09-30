@@ -1,54 +1,53 @@
 package com.example.testing
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.rv_one.*
-import kotlinx.android.synthetic.main.rv_one.view.*
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
+import com.example.testing.databinding.FragmentEventViewActivityBinding
+import com.example.testing.databinding.FragmentProfileFragmentBinding
 
 
-class EventView : AppCompatActivity() ,onClickListener{
+class EventViewActivity : Fragment() ,onClickListener{
 
     private val URLstring = "http://10.0.2.2/getevent.php"
     private lateinit var rvAdapter : RvAdapter
     private var recyclerView: RecyclerView? = null
     val data = ArrayList<ItemsViewModel>()
     private var testing: TextView? = null
+    private var btnViewMore: Button? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.donate_screen)
-        title = "KotlinApp"
+    private lateinit var binding : FragmentEventViewActivityBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_view_activity, container, false)
 
         // getting the recyclerview by its id
-        recyclerView = findViewById<RecyclerView>(R.id.recycler)
+        recyclerView = binding.recycler
         // this creates a vertical layout Manager
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
+        recyclerView!!.layoutManager = LinearLayoutManager(context)
         fetchingJSON()
+        return binding.root
     }
 
     private fun fetchingJSON() {
-        val recyclerview = findViewById<RecyclerView>(R.id.recycler)
+        val recyclerview = binding.recycler
         val stringRequest: JsonArrayRequest = object : JsonArrayRequest(
             Request.Method.GET, URLstring,
             null, { response ->
@@ -73,37 +72,28 @@ class EventView : AppCompatActivity() ,onClickListener{
             },
             Response.ErrorListener { error ->
                 Toast.makeText(
-                    this@EventView,
+                    binding.root.context,
                     error.toString().trim { it <= ' ' },
                     Toast.LENGTH_SHORT
                 ).show()
             }) {
         }
-        val requestQueue = Volley.newRequestQueue(applicationContext)
+        val requestQueue = Volley.newRequestQueue(context)
         requestQueue.add(stringRequest)
+
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Event " +position+ " Clicked", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, EventDetail::class.java)
-        intent.putExtra("image", data[position].image)
-        intent.putExtra("textTitle", data[position].textViewTitle)
-        intent.putExtra("textMeal", data[position].textViewMeal)
-        intent.putExtra("id", data[position].id)
-        intent.putExtra("eventDescription", data[position].eventDescription)
-        startActivity(intent)
-    }
+        val bundle = Bundle()
+        bundle.putString("image", data[position].image)
+        bundle.putString("textTitle", data[position].textViewTitle)
+        bundle.putString("textMeal", data[position].textViewMeal)
+        bundle.putInt("id", data[position].id)
+        bundle.putString("eventDescription", data[position].eventDescription)
+        bundle.putInt("currentMeal", data[position].currentMeal)
 
-    fun register(view: View?) {
-        val intent = Intent(this, Register::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    fun login(view: View?) {
-        val intent = Intent(this, Login::class.java)
-        startActivity(intent)
-        finish()
+        val fragment = EventDetailActivity()
+        fragment.arguments = bundle
+        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
     }
 }
-
