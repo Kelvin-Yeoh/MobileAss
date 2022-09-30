@@ -27,7 +27,7 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".EventDetail"
+            android:name=".DonationActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
