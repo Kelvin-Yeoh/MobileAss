@@ -1,35 +1,45 @@
 package com.example.testing
 
-import android.os.Build
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.rv_one.view.*
-import java.util.*
+import androidx.databinding.DataBindingUtil
+import com.example.testing.databinding.FragmentDonationBinding
 
-class DonationActivity: AppCompatActivity() {
+
+
+class DonationActivity : Fragment() {
 
     lateinit var seekbar : SeekBar
+    private var textTitle: TextView? = null
     private var textMYR: TextView? = null
     private var textMeal: TextView? = null
-    private var btnDonate: Button? = null
+    private var btnMakeDonate: Button? = null
     private var myr: Float? = null
+    private var currentMeal: Int? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private lateinit var binding : FragmentDonationBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.donation_screen)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_donation, container, false)
+        val args = this.arguments
 
-        seekbar = findViewById(R.id.seekBar)
-        textMeal = findViewById(R.id.textChangeMealQuantity)
-        textMYR = findViewById(R.id.textChangeMYR)
-        btnDonate = findViewById(R.id.btnMakeDonate)
+        textTitle = binding.textTitle
+        seekbar = binding.seekBar
+        textMeal = binding.textChangeMealQuantity
+        textMYR = binding.textChangeMYR
+        btnMakeDonate = binding.btnMakeDonate
 
+        textTitle!!.text = args?.getString("textTitle")
         seekbar.max = 50
 
         seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -38,14 +48,29 @@ class DonationActivity: AppCompatActivity() {
                 textMeal!!.text = progress.toString() + " meals"
                 myr = (progress * 3.5).toFloat()
                 textMYR!!.text = "MYR " + myr.toString()
-                btnDonate!!.text = "Donate " + progress.toString() + " meanls"
+                btnMakeDonate!!.text = "Donate " + progress.toString() + " meanls"
+                currentMeal = args?.getInt("currentMeal")!! + progress
             }
-
             override fun onStartTrackingTouch(p0: SeekBar?) {
             }
-
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+        btnMakeDonate!!.setOnClickListener {
+
+            val bundle = Bundle()
+            bundle.putString("image", args?.getString("image"))
+            bundle.putString("textTitle", args?.getString("textTitle"))
+            bundle.putString("textMeal", textMeal!!.text.toString())
+            bundle.putInt("id", args?.getInt("id")!!)
+            bundle.putString("eventDescription", args?.getString("eventDescription"))
+            bundle.putInt("currentMeal", currentMeal!!)
+            bundle.putString("totalMYR", textMYR!!.text.toString())
+
+            val fragment = DonatePaymentActivity()
+            fragment.arguments = bundle
+            fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+        }
+        return binding.root
     }
 }
