@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
 import com.android.volley.AuthFailureError
@@ -24,7 +26,6 @@ import org.json.JSONArray
 
 class ProfileActivity : Fragment() {
 
-
     private lateinit var binding : FragmentProfileFragmentBinding
     private val URL :String = "http://10.0.2.2/login/profile.php"
     private var username: TextView? = null
@@ -32,10 +33,12 @@ class ProfileActivity : Fragment() {
     private var password: TextView? = null
     private var txtTotalDonation: TextView? = null
     private var txtTotalMealDonated: TextView? = null
+    private var btnLogout: Button? = null
     var PREFS_KEY = "prefs"
     var EMAIL_KEY = "email"
     var NAME_KEY = "name"
     lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +47,12 @@ class ProfileActivity : Fragment() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_fragment, container, false)
         sharedPreferences =  binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
-
+        btnLogout = binding.btnLogout
 
         display()
-
+        btnLogout!!.setOnClickListener {
+            clickLogout()
+        }
         return binding.root
     }
 
@@ -94,5 +99,20 @@ class ProfileActivity : Fragment() {
         }
         val requestQueue = Volley.newRequestQueue(binding.root.context)
         requestQueue.add(StringRequest)
+    }
+
+    private fun clickLogout() {
+        sharedPreferences = binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+        removeData()
+        val fragment = LoginActivity()
+        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+    }
+
+    fun removeData(){
+        sharedPreferences = binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+
+        val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
+        editor?.clear()
+        editor?.commit()
     }
 }

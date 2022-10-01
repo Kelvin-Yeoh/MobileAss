@@ -1,6 +1,8 @@
 package com.example.testing
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,16 +53,41 @@ class RegisterActivity : Fragment() {
         btnRegister = binding.btnRegister
         txtLogin = binding.txtLoginScreen
 
+        btnRegister!!.setOnClickListener {
+            save()
+        }
+
+        etEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(android.util.Patterns.EMAIL_ADDRESS.matcher(etEmail.text.toString()).matches()){
+                    btnRegister.isEnabled = true
+                }else{
+                    etEmail.setError("Invalid Email")
+                    btnRegister.isEnabled = false
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+            }
+        )
+
 
         txtLogin.setOnClickListener {
             val fragment = LoginActivity()
             fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
         }
 
+
         return binding.root
     }
 
-    fun save(view: View?) {
+    private fun save() {
         name = etName.text.toString().trim { it <= ' ' }
         email = etEmail.text.toString().trim { it <= ' ' }
         password = etPassword.text.toString().trim { it <= ' ' }

@@ -1,8 +1,6 @@
 package com.example.testing
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +8,20 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.testing.databinding.FragmentEventViewActivityBinding
-import com.example.testing.databinding.FragmentProfileFragmentBinding
 
 
 class EventViewActivity : Fragment() ,onClickListener{
 
-    private val URLstring = "http://10.0.2.2/getevent.php"
+    val URLstring = "http://10.0.2.2/getevent.php"
     private lateinit var rvAdapter : RvAdapter
     private var recyclerView: RecyclerView? = null
     val data = ArrayList<ItemsViewModel>()
@@ -79,6 +78,7 @@ class EventViewActivity : Fragment() ,onClickListener{
             }) {
         }
         val requestQueue = Volley.newRequestQueue(context)
+
         requestQueue.add(stringRequest)
 
     }

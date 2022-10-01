@@ -72,6 +72,8 @@ class DonatePaymentActivity : Fragment() {
             Method.POST, URLstring,
             Response.Listener { response ->
                 Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
+                val fragment = ProfileActivity()
+                fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
             },
             Response.ErrorListener { error ->
                 Toast.makeText(

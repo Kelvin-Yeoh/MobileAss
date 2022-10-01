@@ -6,27 +6,34 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.testing.databinding.FragmentDonationBinding
+import com.example.testing.databinding.FragmentEventCreateActivityBinding
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.eventcreator_screen.*
 import java.io.ByteArrayOutputStream
 
 
-class EventCreator : AppCompatActivity() {
+class EventCreateActivity : Fragment() {
+
+    private lateinit var binding : FragmentEventCreateActivityBinding
     var editTextEventDescription: EditText? = null
     var editTextMeals: EditText? = null
     var editTextEventTitle: EditText? = null
@@ -35,15 +42,20 @@ class EventCreator : AppCompatActivity() {
     var img: ImageView? = null
     var bitmap: Bitmap? = null
     var encodeImageString: String? = null
+    var currentMealint: Int? = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.eventcreator_screen)
-        img = findViewById<View>(R.id.img) as ImageView
-        upload = findViewById<View>(R.id.upload) as Button
-        browse = findViewById<View>(R.id.browse) as Button
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_create_activity, container, false)
+
+        img = binding.img
+        upload = binding.upload
+        browse = binding.browse
         browse!!.setOnClickListener {
-            Dexter.withActivity(this@EventCreator)
+            Dexter.withActivity(activity)
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(object : PermissionListener {
                     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
@@ -62,13 +74,14 @@ class EventCreator : AppCompatActivity() {
                 }).check()
         }
         upload!!.setOnClickListener { uploaddatatodb() }
+        return binding.root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             val filepath = data!!.data
             try {
-                val inputStream = contentResolver.openInputStream(filepath!!)
+                val inputStream = requireActivity().contentResolver.openInputStream(filepath!!)
                 bitmap = BitmapFactory.decodeStream(inputStream)
                 img!!.setImageBitmap(bitmap)
                 encodeBitmapImage(bitmap)
@@ -86,9 +99,11 @@ class EventCreator : AppCompatActivity() {
     }
 
     private fun uploaddatatodb() {
-        editTextEventDescription = findViewById<View>(R.id.editTextEventDescription) as EditText
-        editTextMeals = findViewById<View>(R.id.editTextMeals) as EditText
-        editTextEventTitle = findViewById<View>(R.id.editTextEventTitle) as EditText
+
+        editTextEventDescription = binding.editTextEventDescription
+        editTextMeals = binding.editTextMeals
+        editTextEventTitle = binding.editTextEventTitle
+        val currentMeal = currentMealint.toString().trim { it <= ' ' }
 
         val title = editTextEventTitle!!.text.toString().trim { it <= ' ' }
         val name = editTextEventDescription!!.text.toString().trim { it <= ' ' }
@@ -100,11 +115,11 @@ class EventCreator : AppCompatActivity() {
                 editTextEventDescription!!.setText("")
                 editTextMeals!!.setText("")
                 img!!.setImageResource(R.drawable.ic_launcher_foreground)
-                Toast.makeText(applicationContext, response, Toast.LENGTH_LONG).show()
+                Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
             },
             Response.ErrorListener { error ->
                 Toast.makeText(
-                    applicationContext,
+                    binding.root.context,
                     error.toString(),
                     Toast.LENGTH_LONG
                 ).show()
@@ -115,16 +130,16 @@ class EventCreator : AppCompatActivity() {
                 map["editTextEventDescription"] = name
                 map["editTextMeals"] = meal
                 map["editTextEventTitle"] = title
+                map["currentMeal"] = currentMeal
                 map["upload"] = encodeImageString!!
                 return map
             }
         }
-        val queue = Volley.newRequestQueue(applicationContext)
+        val queue = Volley.newRequestQueue(binding.root.context)
         queue.add(request)
     }
 
     companion object {
         private const val url = "http://10.0.2.2/eventcreate.php"
     }
-
 }

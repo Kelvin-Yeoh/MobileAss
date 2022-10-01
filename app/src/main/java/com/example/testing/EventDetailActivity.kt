@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.testing.databinding.FragmentEventDetailActivityBinding
@@ -47,24 +44,26 @@ class EventDetailActivity : Fragment() {
         val imageUrl = "http://192.168.1.110/images/" + args?.getString("image")
         Picasso.get().load(imageUrl).into(image)
         textTitle.text = args?.getString("textTitle")
-        textMeal!!.text = args?.getString("textMeal")
+        textMeal!!.text = args?.getString("textMeal")  + " out of " + args?.getInt("currentMeal").toString()
         textDescription!!.text = args?.getString("eventDescription")
         progressBar!!.max = args?.getString("textMeal")!!.toInt()
         progressBar!!.progress = args?.getInt("currentMeal")!!
 
         btnDonate!!.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("image", args?.getString("image"))
-            bundle.putString("textTitle", args?.getString("textTitle"))
-            bundle.putString("textMeal", args?.getString("textMeal"))
-            bundle.putInt("id", args?.getInt("id")!!)
-            bundle.putString("eventDescription", args?.getString("eventDescription"))
-            bundle.putInt("currentMeal", args?.getInt("currentMeal")!!)
+
+                val bundle = Bundle()
+                bundle.putString("image", args?.getString("image"))
+                bundle.putString("textTitle", args?.getString("textTitle"))
+                bundle.putString("textMeal", args?.getString("textMeal"))
+                bundle.putInt("id", args?.getInt("id")!!)
+                bundle.putString("eventDescription", args?.getString("eventDescription"))
+                bundle.putInt("currentMeal", args?.getInt("currentMeal")!!)
 
 
-            val fragment = DonationActivity()
-            fragment.arguments = bundle
-            fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+                val fragment = DonationActivity()
+                fragment.arguments = bundle
+                fragmentManager?.beginTransaction()?.replace(R.id.framelayout, fragment)?.commit()
+
         }
         return binding.root
     }

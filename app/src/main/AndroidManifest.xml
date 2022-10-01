@@ -30,7 +30,7 @@
             android:name=".DonationActivity"
             android:exported="false" />
         <activity
-            android:name=".EventView"
+            android:name=".EventCreator"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"

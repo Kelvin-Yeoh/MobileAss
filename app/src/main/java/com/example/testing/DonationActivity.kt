@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.testing.databinding.FragmentDonationBinding
 
@@ -59,7 +60,7 @@ class DonationActivity : Fragment() {
             }
         })
         btnMakeDonate!!.setOnClickListener {
-
+            if (seekbar!!.progress > 0) {
             val bundle = Bundle()
             bundle.putString("image", args?.getString("image"))
             bundle.putString("textTitle", args?.getString("textTitle"))
@@ -73,6 +74,9 @@ class DonationActivity : Fragment() {
             val fragment = DonatePaymentActivity()
             fragment.arguments = bundle
             fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+            } else {
+                Toast.makeText(binding.root.context, "Danation cannot be 0 !", Toast.LENGTH_SHORT).show()
+            }
         }
         return binding.root
     }

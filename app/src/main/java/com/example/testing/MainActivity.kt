@@ -5,22 +5,34 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.view.MenuItem
+import android.widget.Button
 
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toolbar
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var etEmail: TextView
-    lateinit var etPassword: TextView
-    lateinit var etUsername: TextView
-
-    private val URL :String = "http://10.0.2.2/login/login.php"
+    val URL :String = "http://10.0.2.2/login/login.php"
     lateinit var toggle: ActionBarDrawerToggle
+    val URLstring = "http://10.0.2.2/getevent.php"
+    private lateinit var rvAdapter : RvAdapter
+    private var recyclerView: RecyclerView? = null
+    val data = ArrayList<ItemsViewModel>()
+    private var testing: TextView? = null
+    private var btnViewMore: Button? = null
+    private var toolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -31,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        replaceFragment(EventViewActivity(), title.toString())
+
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         nav_view.setNavigationItemSelectedListener {
@@ -38,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.nav_profile -> replaceFragment(LoginActivity(), it.title.toString())
                 R.id.nav_home -> replaceFragment(EventViewActivity(), it.title.toString())
+                R.id.nav_event -> replaceFragment(EventCreateActivity(), it.title.toString())
             }
             true
         }
@@ -57,6 +72,5 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 }
