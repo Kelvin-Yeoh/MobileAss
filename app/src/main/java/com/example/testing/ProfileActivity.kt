@@ -30,6 +30,8 @@ class ProfileActivity : Fragment() {
     private var username: TextView? = null
     private var useremail: TextView? = null
     private var password: TextView? = null
+    private var txtTotalDonation: TextView? = null
+    private var txtTotalMealDonated: TextView? = null
     var PREFS_KEY = "prefs"
     var EMAIL_KEY = "email"
     var NAME_KEY = "name"
@@ -43,6 +45,7 @@ class ProfileActivity : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_fragment, container, false)
         sharedPreferences =  binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
+
         display()
 
         return binding.root
@@ -53,7 +56,8 @@ class ProfileActivity : Fragment() {
         username = binding.lblUsernametesting
         useremail = binding.lblEmailtesting
         password = binding.lblPasswordtesting
-
+        txtTotalDonation = binding.textViewTotalDonations
+        txtTotalMealDonated = binding.textViewTotalMealDonated
 
 
         val email = sharedPreferences.getString(EMAIL_KEY, null)!!
@@ -69,6 +73,9 @@ class ProfileActivity : Fragment() {
                     username!!.text = dataobj.get("name").toString();
                     useremail!!.text = dataobj.get("email").toString();
                     password!!.text = dataobj.getString("password");
+                    txtTotalMealDonated!!.text = dataobj.getInt("donated_meal").toString();
+                    val totalDonation = dataobj.getInt("donated_meal") * 3.5
+                    txtTotalDonation!!.text = totalDonation.toString();
                 }
             },
             Response.ErrorListener { error ->

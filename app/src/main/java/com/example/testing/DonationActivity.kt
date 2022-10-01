@@ -22,6 +22,7 @@ class DonationActivity : Fragment() {
     private var btnMakeDonate: Button? = null
     private var myr: Float? = null
     private var currentMeal: Int? = null
+    private var currentMealAfterDonation: Int? = null
 
     private lateinit var binding : FragmentDonationBinding
 
@@ -49,7 +50,8 @@ class DonationActivity : Fragment() {
                 myr = (progress * 3.5).toFloat()
                 textMYR!!.text = "MYR " + myr.toString()
                 btnMakeDonate!!.text = "Donate " + progress.toString() + " meanls"
-                currentMeal = args?.getInt("currentMeal")!! + progress
+                currentMeal = progress
+                currentMealAfterDonation = args?.getInt("currentMeal")!! + progress
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {
             }
@@ -64,7 +66,8 @@ class DonationActivity : Fragment() {
             bundle.putString("textMeal", textMeal!!.text.toString())
             bundle.putInt("id", args?.getInt("id")!!)
             bundle.putString("eventDescription", args?.getString("eventDescription"))
-            bundle.putInt("currentMeal", currentMeal!!)
+            bundle.putInt("donationMeal", currentMeal!!)
+            bundle.putInt("currentMealAfterDonation", currentMealAfterDonation!!)
             bundle.putString("totalMYR", textMYR!!.text.toString())
 
             val fragment = DonatePaymentActivity()
