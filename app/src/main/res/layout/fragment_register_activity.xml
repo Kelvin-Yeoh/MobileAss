@@ -2,13 +2,36 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <!-- Header aligned to top -->
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="92dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <TextView
+            android:id="@+id/txtLoginScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Login"
+            android:onClick="login"
+            android:textColor="#2196F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
         <RelativeLayout
             android:id="@+id/header"
@@ -85,6 +108,7 @@
 
         <!-- Content -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -96,8 +120,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="328dp"
+                android:layout_height="322dp"
                 android:background="#40E7C9C9"
                 android:minWidth="12dp"
                 android:orientation="vertical">
@@ -108,15 +132,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="16dp"
-                    android:text="Email:" />
+                    android:text="Username:" />
 
                 <EditText
-                    android:id="@+id/txtEmail"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtUsername"
+                    android:layout_width="261dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:ems="10"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textPersonName" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -127,31 +151,62 @@
 
                 <EditText
                     android:id="@+id/txtPassword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="261dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
                     android:ems="10"
+
                     android:inputType="textPassword" />
 
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="134dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:text="Login" />
+                    android:layout_marginStart="20dp"
+                    android:text="Re-enter Password:" />
+
+                <EditText
+                    android:id="@+id/txtReenterPassword"
+                    android:layout_width="261dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+
+                    android:inputType="textPassword" />
 
                 <TextView
-                    android:id="@+id/txtLoginSignUp"
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="120dp"
-                    android:text="Sign Up"
-                    android:textColor="#2196F3" />
+                    android:layout_marginStart="20dp"
+                    android:text="email:" />
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="261dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:onClick="save"
+            app:layout_constraintBottom_toBottomOf="@+id/footer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintVertical_bias="0.101" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

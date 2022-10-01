@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.android.volley.AuthFailureError
@@ -28,6 +29,7 @@ class LoginActivity : Fragment() {
     lateinit var etEmail: EditText
     lateinit var etPassword: EditText
     private var btnLogin: Button? = null
+    private var signUp: TextView? = null
 
     private val URL :String = "http://10.0.2.2/login/login.php"
     private lateinit var binding : FragmentLoginActivityBinding
@@ -46,6 +48,7 @@ class LoginActivity : Fragment() {
         etEmail = binding.txtEmail
         etPassword = binding.txtPassword
         btnLogin = binding.btnLogin
+        signUp = binding.txtLoginSignUp
 
 
         sharedPreferences = binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
@@ -54,6 +57,11 @@ class LoginActivity : Fragment() {
         btnLogin!!.setOnClickListener {
             login()
         }
+
+        signUp!!.setOnClickListener {
+            register()
+        }
+
         return binding.root
     }
 
@@ -104,10 +112,9 @@ class LoginActivity : Fragment() {
         }
     }
 
-    fun register(view: View?) {
-        val intent = Intent(binding.root.context, Register::class.java)
-        startActivity(intent)
-        activity?.finish()
+    private fun register() {
+        val fragment = RegisterActivity()
+        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
     }
 
 }

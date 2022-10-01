@@ -127,15 +127,4 @@ class EventCreator : AppCompatActivity() {
         private const val url = "http://10.0.2.2/eventcreate.php"
     }
 
-    fun register(view: View?) {
-        val intent = Intent(this, Register::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    fun login(view: View?) {
-        val intent = Intent(this, Login::class.java)
-        startActivity(intent)
-        finish()
-    }
 }
