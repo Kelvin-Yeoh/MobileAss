@@ -62,9 +62,9 @@ class AdminModifyActivity : Fragment() {
         val StringRequest: StringRequest = object : StringRequest(
             Request.Method.POST, URLstring,
             Response.Listener{ response ->
-                val userDetail = JSONArray(response)
-                for (i in 0 until userDetail.length()) {
-                    val dataobj = userDetail.getJSONObject(i)
+                val event = JSONArray(response)
+                for (i in 0 until event.length()) {
+                    val dataobj = event.getJSONObject(i)
 
                     editTextEventDescription!!.text = dataobj.get("event_description").toString();
                     editTextMeals!!.text = dataobj.get("meal_quantity").toString();

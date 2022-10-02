@@ -35,11 +35,15 @@ class UserMainActivity : AppCompatActivity() {
     private var testing: TextView? = null
     private var btnViewMore: Button? = null
     private var toolbar: Toolbar? = null
+    var PREFS_KEY = "prefs"
+    var EMAIL_KEY = "email"
+    var NAME_KEY = "name"
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        sharedPreferences =  this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -51,6 +55,7 @@ class UserMainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.nav_profile -> replaceFragment(ProfileActivity(), it.title.toString())
                 R.id.nav_home -> replaceFragment(EventViewActivity(), it.title.toString())
+                R.id.nav_logout -> clickLogout()
             }
             true
         }
@@ -61,6 +66,7 @@ class UserMainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.framelayout,fragment)
         fragmentTransaction.commit()
+        drawerLayout.closeDrawers()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -68,5 +74,20 @@ class UserMainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun clickLogout() {
+        sharedPreferences = this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+        removeData()
+        val intent = Intent(this@UserMainActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun removeData(){
+        sharedPreferences = this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+
+        val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
+        editor?.clear()
+        editor?.commit()
     }
 }
