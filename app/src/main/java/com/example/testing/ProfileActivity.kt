@@ -89,9 +89,9 @@ class ProfileActivity : Fragment() {
                     username!!.text = dataobj.get("name").toString();
                     useremail!!.text = dataobj.get("email").toString();
                     password!!.text = dataobj.getString("password");
-                    txtTotalMealDonated!!.text = dataobj.getInt("donated_meal").toString();
-                    val totalDonation = dataobj.getInt("donated_meal") * 3.5
-                    txtTotalDonation!!.text = totalDonation.toString();
+//                    txtTotalMealDonated!!.text = dataobj.getInt("donated_meal").toString();
+//                    val totalDonation = dataobj.getInt("donated_meal") * 3.5
+//                    txtTotalDonation!!.text = totalDonation.toString();
                 }
             },
             Response.ErrorListener { error ->
