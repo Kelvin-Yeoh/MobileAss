@@ -34,6 +34,7 @@ class ProfileActivity : Fragment() {
     private var txtTotalDonation: TextView? = null
     private var txtTotalMealDonated: TextView? = null
     private var btnLogout: Button? = null
+    private var btnModify: Button? = null
     var PREFS_KEY = "prefs"
     var EMAIL_KEY = "email"
     var NAME_KEY = "name"
@@ -48,6 +49,15 @@ class ProfileActivity : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_fragment, container, false)
         sharedPreferences =  binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
         btnLogout = binding.btnLogout
+
+        btnModify = binding.btnModify
+
+
+        btnModify!!.setOnClickListener{
+            val fragment = UpdateProfile()
+            fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+
+        }
 
         display()
         btnLogout!!.setOnClickListener {
