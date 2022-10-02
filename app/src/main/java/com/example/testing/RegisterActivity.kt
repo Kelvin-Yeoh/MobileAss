@@ -98,10 +98,11 @@ class RegisterActivity : Fragment() {
             val stringRequest: StringRequest = object : StringRequest(
                 Request.Method.POST, URL,
                 Response.Listener { response ->
-                    tvStatus.text = response.toString()
                     Log.d("Register",response)
                     if (response == "success") {
-                        tvStatus.text = "Successfully registered."
+                        Toast.makeText(binding.root.context,
+                            "Successfully registered.",
+                            Toast.LENGTH_SHORT).show()
                         btnRegister.isClickable = false
                     } else if (response == "failure") {
                         tvStatus.text = "Something went wrong!"
