@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/cardViewColor"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="399dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="149dp"
+                android:layout_height="156dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="225dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="ddd"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewMeal"
+                    android:layout_width="225dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:text="ddd"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/eventProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="225dp"
+                    android:layout_height="23dp"
+                    android:scaleY="2"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewMeal" />
+
+
+                <Button
+                    android:id="@+id/btnModify"
+                    android:layout_width="135dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:text="modify"
+                    android:textColor="#FFF"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewMeal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

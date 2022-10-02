@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class UserMainActivity : AppCompatActivity() {
 
     val URL :String = "http://10.0.2.2/login/login.php"
     lateinit var toggle: ActionBarDrawerToggle
@@ -35,18 +35,10 @@ class MainActivity : AppCompatActivity() {
     private var testing: TextView? = null
     private var btnViewMore: Button? = null
     private var toolbar: Toolbar? = null
-    var PREFS_KEY = "prefs"
-    var EMAIL_KEY = "email"
-    var NAME_KEY = "name"
-    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        sharedPreferences =  this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor=sharedPreferences.edit()
-        editor.putString(EMAIL_KEY, "")
-        editor.apply()
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -54,14 +46,14 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(EventViewActivity(), title.toString())
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            nav_view.setNavigationItemSelectedListener {
+        nav_view.setNavigationItemSelectedListener {
 
-                when(it.itemId){
-                    R.id.nav_profile -> replaceFragment(LoginActivity(), it.title.toString())
-                    R.id.nav_home -> replaceFragment(EventViewActivity(), it.title.toString())
-                }
-                true
+            when(it.itemId){
+                R.id.nav_profile -> replaceFragment(ProfileActivity(), it.title.toString())
+                R.id.nav_home -> replaceFragment(EventViewActivity(), it.title.toString())
             }
+            true
+        }
     }
 
     private fun replaceFragment(fragment: Fragment, title : String) {
@@ -69,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.framelayout,fragment)
         fragmentTransaction.commit()
-        drawerLayout.closeDrawers()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

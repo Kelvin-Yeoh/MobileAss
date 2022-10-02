@@ -20,6 +20,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.testing.databinding.FragmentLoginActivityBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class LoginActivity : Fragment() {
@@ -79,8 +80,14 @@ class LoginActivity : Fragment() {
                         editor.apply()
 //                        val intent = Intent(binding.root.context, ProfileActivity::class.java)
 //                        startActivity(intent)
-                        val fragment = ProfileActivity()
-                        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+                        if(etEmail.text.toString() != "admin"){
+                            val intent = Intent(binding.root.context, UserMainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(binding.root.context, AdminMainActivity::class.java)
+                            startActivity(intent)
+                        }
+
                     } else if (response == "failure") {
                         Toast.makeText(
                             binding.root.context,

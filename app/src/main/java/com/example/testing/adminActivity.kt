@@ -18,29 +18,29 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
+import com.example.testing.databinding.FragmentAdminActivityBinding
 import com.example.testing.databinding.FragmentEventViewActivityBinding
 
 
-class EventViewActivity : Fragment() ,onClickListener{
+class adminActivity : Fragment() ,onClickListener{
 
     val URLstring = "http://10.0.2.2/getevent.php"
-    private lateinit var rvAdapter : RvAdapter
+    private lateinit var rvAdapter : adminRvAdapter
     private var recyclerView: RecyclerView? = null
     val data = ArrayList<ItemsViewModel>()
     private var testing: TextView? = null
     private var btnViewMore: Button? = null
 
-
-    private lateinit var binding : FragmentEventViewActivityBinding
+    private lateinit var binding : FragmentAdminActivityBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_view_activity, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_admin_activity, container, false)
         // getting the recyclerview by its id
-        recyclerView = binding.recycler
+        recyclerView = binding.adminRecycler
         // this creates a vertical layout Manager
         recyclerView!!.layoutManager = LinearLayoutManager(context)
         fetchingJSON()
@@ -48,7 +48,7 @@ class EventViewActivity : Fragment() ,onClickListener{
     }
 
     private fun fetchingJSON() {
-        val recyclerview = binding.recycler
+        val recyclerview = binding.adminRecycler
         val stringRequest: JsonArrayRequest = object : JsonArrayRequest(
             Request.Method.GET, URLstring,
             null, { response ->
@@ -68,7 +68,7 @@ class EventViewActivity : Fragment() ,onClickListener{
                         )
                     )
                 }
-                val adapter = RvAdapter(data, this)
+                val adapter = adminRvAdapter(data, this)
                 recyclerview.adapter = adapter
             },
             Response.ErrorListener { error ->
@@ -86,18 +86,18 @@ class EventViewActivity : Fragment() ,onClickListener{
     }
 
     override fun onItemClick(position: Int) {
+        val bundle = Bundle()
+        bundle.putString("image", data[position].image)
+        bundle.putString("textTitle", data[position].textViewTitle)
+        bundle.putString("textMeal", data[position].textViewMeal)
+        bundle.putInt("id", data[position].id)
+        bundle.putString("eventDescription", data[position].eventDescription)
+        bundle.putInt("currentMeal", data[position].currentMeal)
 
-            val bundle = Bundle()
-            bundle.putString("image", data[position].image)
-            bundle.putString("textTitle", data[position].textViewTitle)
-            bundle.putString("textMeal", data[position].textViewMeal)
-            bundle.putInt("id", data[position].id)
-            bundle.putString("eventDescription", data[position].eventDescription)
-            bundle.putInt("currentMeal", data[position].currentMeal)
-
-            val fragment = EventDetailActivity()
-            fragment.arguments = bundle
-            fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
-
+        val fragment = AdminModifyActivity()
+        fragment.arguments = bundle
+        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
     }
+
+
 }

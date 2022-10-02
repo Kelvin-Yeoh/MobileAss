@@ -35,6 +35,7 @@ class DonatePaymentActivity : Fragment() {
     private var textDetail: TextView? = null
     private var textTotal: TextView? = null
     private var btnConfirm: Button? = null
+    private var unknown: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,29 +68,28 @@ class DonatePaymentActivity : Fragment() {
         val id = args?.getInt("id")!!.toString().trim{ it <= ' ' }
         val currentMealDB = args?.getInt("currentMealAfterDonation").toString().trim{ it <= ' ' }
 
-
         val request: StringRequest = object : StringRequest(
             Method.POST, URLstring,
-            Response.Listener { response ->
-                Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
-                val fragment = ProfileActivity()
-                fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(
-                    binding.root.context,
-                    error.toString(),
-                    Toast.LENGTH_LONG
-                ).show()
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String>? {
-                val map: MutableMap<String, String> = HashMap()
-                map["id"] = id
-                map["current_meal_quantity"] = currentMealDB
-                return map
+                Response.Listener { response ->
+                    Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
+                    val fragment = ProfileActivity()
+                    fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+                },
+                Response.ErrorListener { error ->
+                    Toast.makeText(
+                        binding.root.context,
+                        error.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String>? {
+                    val map: MutableMap<String, String> = HashMap()
+                    map["id"] = id
+                    map["current_meal_quantity"] = currentMealDB
+                    return map
+                }
             }
-        }
         val queue = Volley.newRequestQueue(binding.root.context)
         queue.add(request)
     }
@@ -97,29 +97,32 @@ class DonatePaymentActivity : Fragment() {
     private fun updateToProfileDatabase(){
         val args = this.arguments
         val email = sharedPreferences.getString(EMAIL_KEY, null)!!
+
         val profileMeal = args?.getInt("donationMeal").toString().trim{ it <= ' ' }
 
-        val request: StringRequest = object : StringRequest(
-            Method.POST, URL,
-            Response.Listener { response ->
-                Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(
-                    binding.root.context,
-                    error.toString(),
-                    Toast.LENGTH_LONG
-                ).show()
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String>? {
-                val map: MutableMap<String, String> = HashMap()
-                map["email"] = email!!
-                map["donationMeal"] = profileMeal
-                return map
+
+            val request: StringRequest = object : StringRequest(
+                Method.POST, URL,
+                Response.Listener { response ->
+                    Toast.makeText(binding.root.context, response, Toast.LENGTH_LONG).show()
+                },
+                Response.ErrorListener { error ->
+                    Toast.makeText(
+                        binding.root.context,
+                        error.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String>? {
+                    val map: MutableMap<String, String> = HashMap()
+                    map["email"] = email!!
+                    map["donationMeal"] = profileMeal
+                    return map
+                }
             }
-        }
         val queue = Volley.newRequestQueue(binding.root.context)
         queue.add(request)
     }
+
 }

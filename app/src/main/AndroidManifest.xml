@@ -36,6 +36,12 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

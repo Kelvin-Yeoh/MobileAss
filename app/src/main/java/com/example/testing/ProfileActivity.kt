@@ -66,6 +66,7 @@ class ProfileActivity : Fragment() {
 
 
         val email = sharedPreferences.getString(EMAIL_KEY, null)!!
+        txtTotalDonation!!.text = email
         val StringRequest: StringRequest = object : StringRequest(
             Request.Method.POST, URL,
             Response.Listener{ response ->
@@ -104,8 +105,8 @@ class ProfileActivity : Fragment() {
     private fun clickLogout() {
         sharedPreferences = binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
         removeData()
-        val fragment = LoginActivity()
-        fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+        val intent = Intent(binding.root.context, MainActivity::class.java)
+        startActivity(intent)
     }
 
     fun removeData(){

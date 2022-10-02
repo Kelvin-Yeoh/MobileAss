@@ -1,5 +1,7 @@
 package com.example.testing
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +22,11 @@ class EventDetailActivity : Fragment() {
     private var eventID: Int? = null
     private var btnDonate: Button? = null
     private var progressBar : ProgressBar? = null
-
-
     private lateinit var binding : FragmentEventDetailActivityBinding
+    var PREFS_KEY = "prefs"
+    var EMAIL_KEY = "email"
+    var NAME_KEY = "name"
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +34,7 @@ class EventDetailActivity : Fragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_detail_activity, container, false)
+        sharedPreferences =  binding.root.context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
         super.onCreate(savedInstanceState)
         textTitle = binding.textViewTitle
@@ -50,7 +55,9 @@ class EventDetailActivity : Fragment() {
         progressBar!!.progress = args?.getInt("currentMeal")!!
 
         btnDonate!!.setOnClickListener {
-
+            val email = sharedPreferences.getString(EMAIL_KEY, null)!!
+            var checkEmail = email
+            if (checkEmail != null && checkEmail != ""){
                 val bundle = Bundle()
                 bundle.putString("image", args?.getString("image"))
                 bundle.putString("textTitle", args?.getString("textTitle"))
@@ -63,7 +70,10 @@ class EventDetailActivity : Fragment() {
                 val fragment = DonationActivity()
                 fragment.arguments = bundle
                 fragmentManager?.beginTransaction()?.replace(R.id.framelayout, fragment)?.commit()
-
+            } else {
+                val fragment = LoginActivity()
+                fragmentManager?.beginTransaction()?.replace(R.id.framelayout,fragment)?.commit()
+            }
         }
         return binding.root
     }

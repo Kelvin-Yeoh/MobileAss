@@ -1,9 +1,6 @@
 package com.example.testing
 
 import android.animation.ObjectAnimator
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +8,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.rv_one.view.*
+import kotlinx.android.synthetic.main.adminrv_one.view.*
 
-class RvAdapter (private val mList: List<ItemsViewModel>, private val onClickListener: onClickListener) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+class adminRvAdapter (private val mList: List<ItemsViewModel>, private val onClickListener: onClickListener) : RecyclerView.Adapter<adminRvAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): adminRvAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.rv_one, parent, false)
+            .inflate(R.layout.adminrv_one, parent, false)
 
 
         return ViewHolder(view)
@@ -39,13 +35,17 @@ class RvAdapter (private val mList: List<ItemsViewModel>, private val onClickLis
         holder.itemView.setOnClickListener{
             onClickListener.onItemClick(position)
         }
-        holder.itemView.btnViewMore.setOnClickListener {
+        holder.itemView.btnModify.setOnClickListener {
             onClickListener.onItemClick(position)
         }
 
         holder.eventID = ItemsViewModel.id
         holder.eventDescription = ItemsViewModel.eventDescription
         holder.currentMeal = ItemsViewModel.currentMeal
+    }
+
+    override fun getItemCount(): Int {
+        return mList.size
     }
 
     // Holds the views for adding it to image and text
@@ -57,11 +57,6 @@ class RvAdapter (private val mList: List<ItemsViewModel>, private val onClickLis
         var eventDescription: String? = null
         var currentMeal: Int? = null
         val progressBar: ProgressBar = itemView.findViewById(R.id.eventProgressBar)
-        val btnViewMore: Button = itemView.findViewById(R.id.btnViewMore)
-    }
-
-    // return the number of the items in the list
-    override fun getItemCount(): Int {
-        return mList.size
+        val btnModify: Button = itemView.findViewById(R.id.btnModify)
     }
 }
