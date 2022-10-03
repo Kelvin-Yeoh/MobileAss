@@ -32,7 +32,7 @@ class RvAdapter (private val mList: List<ItemsViewModel>, private val onClickLis
         val imageUrl = "http://192.168.1.110/images/" + ItemsViewModel.image
         Picasso.get().load(imageUrl).into(holder.itemView.image)
         holder.itemView.textViewTitle.text = ItemsViewModel.textViewTitle
-        holder.itemView.textViewMeal.text = ItemsViewModel.textViewMeal
+        holder.itemView.textViewMeal.text = ItemsViewModel.textViewMeal + " out of " + ItemsViewModel.currentMeal
         holder.itemView.eventProgressBar.max = ItemsViewModel.textViewMeal.toInt()
         ObjectAnimator.ofInt(holder.itemView.eventProgressBar, "progress", ItemsViewModel.currentMeal).start()
 

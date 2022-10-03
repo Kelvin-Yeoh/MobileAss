@@ -76,7 +76,6 @@ class ProfileActivity : Fragment() {
 
 
         val email = sharedPreferences.getString(EMAIL_KEY, null)!!
-        txtTotalDonation!!.text = email
         val StringRequest: StringRequest = object : StringRequest(
             Request.Method.POST, URL,
             Response.Listener{ response ->
@@ -89,9 +88,9 @@ class ProfileActivity : Fragment() {
                     username!!.text = dataobj.get("name").toString();
                     useremail!!.text = dataobj.get("email").toString();
                     password!!.text = dataobj.getString("password");
-//                    txtTotalMealDonated!!.text = dataobj.getInt("donated_meal").toString();
-//                    val totalDonation = dataobj.getInt("donated_meal") * 3.5
-//                    txtTotalDonation!!.text = totalDonation.toString();
+                    txtTotalMealDonated!!.text = dataobj.getInt("donated_meal").toString();
+                    val totalDonation = dataobj.getInt("donated_meal") * 3.5
+                    txtTotalDonation!!.text = totalDonation.toString();
                 }
             },
             Response.ErrorListener { error ->

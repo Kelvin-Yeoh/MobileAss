@@ -36,8 +36,8 @@
 
                 <TextView
                     android:id="@+id/textViewTitle"
-                    android:layout_width="225dp"
-                    android:layout_height="30dp"
+                    android:layout_width="210dp"
+                    android:layout_height="49dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="ddd"
@@ -51,8 +51,9 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="ddd"
+                    android:textSize="12dp"
                     android:textColor="#000"
-                    android:textStyle="bold" />
+                    android:textStyle="italic" />
 
                 <ProgressBar
                     android:id="@+id/eventProgressBar"
